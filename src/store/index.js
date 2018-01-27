@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 14:33:28
  * @Last Modified by: LHX
- * @Last Modified time: 2018-01-27 14:45:35
+ * @Last Modified time: 2018-01-27 17:09:43
  * @store
  */
 
@@ -18,26 +18,19 @@ const state = {
 }
 
 const getters = {
-    getCart: state => shoppingCart
+    getCart: state => state.shoppingCart
 }
 
 const mutations = {
     // 添加商品
     'ADDCART': (state, goods) => {
-        state.shoppingCart.push(goods);
-    },
-    // 删除商品
-    'DELCART': (state, index) => {
-        state.shoppingCart.splice(index, 1);
+        state.shoppingCart = goods;
     }
 }
 
 const actions = {
     addCart: ({ commit }, goods) => {
         commit('ADDCART', goods);
-    },
-    delCart: ({ commit }, index) => {
-        commit('DELCART', index);
     }
 }
 

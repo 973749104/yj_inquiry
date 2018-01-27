@@ -24,6 +24,7 @@ export default {
           title: 'SN',
           key: 'SN',
           filters:[
+            { label: '1111', value: '1111'},
             { label: '3131', value: '3131'},
             { label: '3131', value: '3131'},
             { label: '3131', value: '3131'},
@@ -38,8 +39,11 @@ export default {
             { label: '3131', value: '3131'},
             { label: '3131', value: '3131'},
             { label: '3131', value: '3131'},
-            { label: '3131', value: '3131'},
-            ]
+            ],
+            filterMultiple: true,
+            filterMethod (value, row){
+              return row.SN.includes(value);
+            }
         },
         {
           title: 'IMEI',
@@ -55,6 +59,30 @@ export default {
         }
       ],
       dataTable: [
+        {
+          SN: '21321',
+          IMEI: 'ASDAS',
+          ECID: 'AS25D2AS4',
+          MLBSN: '3S4DW313',
+        },
+        {
+          SN: '1111',
+          IMEI: 'ASDAS',
+          ECID: 'AS25D2AS4',
+          MLBSN: '3S4DW313',
+        },
+        {
+          SN: '21321',
+          IMEI: 'ASDAS',
+          ECID: 'AS25D2AS4',
+          MLBSN: '3S4DW313',
+        },
+        {
+          SN: '21321',
+          IMEI: 'ASDAS',
+          ECID: 'AS25D2AS4',
+          MLBSN: '3S4DW313',
+        },
         {
           SN: '21321',
           IMEI: 'ASDAS',
@@ -138,8 +166,8 @@ export default {
   },
   methods: {
     select(selection, row) {
-      console.log(`已选数据 ${selection}`);
-      console.log(row);
+        this.$store.dispatch('addCart', selection);
+        console.log(this.$store.getters.getCart)
       },
     selectAll: function (selection){
       console.log(selection);
