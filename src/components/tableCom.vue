@@ -1,6 +1,12 @@
 <template>
   <div class="tableCom">
-    <Table  ref="selection" :columns="columns" :data="dataTable" size="small"></Table>
+    <Table
+      :columns="columns"
+      :data="dataTable"
+      size="small"
+      @on-select="select"
+      @on-select-all="selectAll"
+      ></Table>
   </div>
 </template>
 
@@ -128,6 +134,15 @@ export default {
           MLBSN: '3S4DW313',
         },
       ]
+    }
+  },
+  methods: {
+    select(selection, row) {
+      console.log(`已选数据 ${selection}`);
+      console.log(row);
+      },
+    selectAll: function (selection){
+      console.log(selection);
     }
   }
 }
