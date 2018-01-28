@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:17
  * @Last Modified by: LHX
- * @Last Modified time: 2018-01-27 16:56:43
+ * @Last Modified time: 2018-01-28 18:20:11
  * @ 首页
  */
 <template>
@@ -16,16 +16,15 @@
         </div>
         <div class="actButton">
           <Button type="error"
-            @click="modalCart = true"
-            :disabled="this.$store.getters.getCart.length <= 0"
+            @click="showCart"
           >购买</Button>
         </div>
       </Header>
       <Content>
         <!-- 分页 -->
         <Tabs v-model="tabIndex">
-          <TabPane v-for="(item, index) in tabs" :key="index" :label="item">
-            <Tables></Tables>
+          <TabPane v-for="(item, index) in tabs" :key="index" :label="item" :name="item">
+            <Tables v-on:selectData="addCart" :tabs="item"></Tables>
           </TabPane>
         </Tabs>
       </Content>
@@ -34,6 +33,7 @@
     <Modal
       v-model="modalCart"
       title="确认购买数据"
+      ok-text="确认购买"
       @on-ok="buyOk"
       @on-cancel="buyCancel"
     >
@@ -83,18 +83,40 @@ export default {
           title: 'MLBSN',
           key: 'MLBSN'
         }
-      ]
+      ],
+      cartGoods: {},
     }
+  },
+  mounted () {
   },
   components: {
     Tables
   },
   methods: {
+    showCart: function() {
+      if(JSON.stringify(this.cartGoods) == '{}'){
+        console.log('no data');
+        return false;
+      }else{
+        for(let index in this.cartGoods){
+          this.$store.dispatch('addCart', this.cartGoods[index])
+        }
+        console.log(this.$store.getters.getCart)
+        this.modalCart = true;
+      }
+    },
+    addCart: function(selectData, tabs) {
+      let keys = tabs;
+      this.cartGoods[tabs] = selectData;
+    },
     buyOk: function() {
       console.log('ok');
     },
     buyCancel: function() {
       console.log('cancle');
+    },
+    changeTab: function() {
+      console.log(this.tabIndex);
     }
   }
 }

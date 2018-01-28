@@ -4,8 +4,8 @@
       :columns="columns"
       :data="dataTable"
       size="small"
-      @on-select="select"
-      @on-select-all="selectAll"
+      @on-selection-change="select"
+
       ></Table>
   </div>
 </template>
@@ -164,13 +164,20 @@ export default {
       ]
     }
   },
+  mounted () {
+  },
+  props: {
+      tabs: {
+        type: String
+      }
+  },
   methods: {
-    select(selection, row) {
-        this.$store.dispatch('addCart', selection);
-        console.log(this.$store.getters.getCart)
+    select(selection) {
+        this.$emit('selectData', selection, this.tabs);
       },
-    selectAll: function (selection){
-      console.log(selection);
+    selectAll(selection) {
+        console.log(selection);
+        this.$emit('selectData', selection, this.tabs);
     }
   }
 }
