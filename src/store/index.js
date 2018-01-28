@@ -1,8 +1,8 @@
 /*
  * @Author: LHX
  * @Date: 2018-01-27 14:33:28
- * @Last Modified by: LHX
- * @Last Modified time: 2018-01-28 18:08:38
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-01-28 20:26:54
  * @store
  */
 
@@ -24,13 +24,20 @@ const getters = {
 const mutations = {
     // 添加商品
     'ADDCART': (state, goods) => {
-        state.shoppingCart = goods;
+        state.shoppingCart.push(goods);
+    },
+    // 清空购物车
+    'CLEARCART': (statr) => {
+        state.shoppingCart = [];
     }
 }
 
 const actions = {
     addCart: ({ commit }, goods) => {
         commit('ADDCART', goods);
+    },
+    clearCart: ({ commit }) => {
+        commit('CLEARCART');
     }
 }
 

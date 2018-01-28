@@ -7,6 +7,21 @@ import router from './router/index';
 
 Vue.config.productionTip = false
 Vue.use(iView);
+
+const isLogin = false;
+// 路由拦截
+router.beforeEach((to, from, next) => {
+    if (isLogin) {
+        next();
+    } else {
+        if (to.path === '/login') {
+            next();
+        } else {
+            next('/login');
+        }
+    }
+})
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

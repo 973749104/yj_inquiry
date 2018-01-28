@@ -1,8 +1,8 @@
 /*
  * @Author: LHX
  * @Date: 2018-01-27 15:05:17
- * @Last Modified by: LHX
- * @Last Modified time: 2018-01-28 18:20:11
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-01-28 20:35:33
  * @ 首页
  */
 <template>
@@ -35,7 +35,6 @@
       title="确认购买数据"
       ok-text="确认购买"
       @on-ok="buyOk"
-      @on-cancel="buyCancel"
     >
       <Table
         :columns="columns"
@@ -94,29 +93,30 @@ export default {
   },
   methods: {
     showCart: function() {
+      // 每次点击购买先清空购物车
+      this.$store.dispatch('clearCart');
       if(JSON.stringify(this.cartGoods) == '{}'){
-        console.log('no data');
+        this.$Message.error('请选择数据');
         return false;
       }else{
+        // 循环将数据添加进购物车
         for(let index in this.cartGoods){
-          this.$store.dispatch('addCart', this.cartGoods[index])
+          for(let childIndex of this.cartGoods[index]){
+            this.$store.dispatch('addCart', childIndex)
+          }
         }
-        console.log(this.$store.getters.getCart)
+        // 显示modal
         this.modalCart = true;
       }
     },
+    // 标签页选项添加进catGoods
     addCart: function(selectData, tabs) {
       let keys = tabs;
       this.cartGoods[tabs] = selectData;
     },
+    // 确认购买事件
     buyOk: function() {
       console.log('ok');
-    },
-    buyCancel: function() {
-      console.log('cancle');
-    },
-    changeTab: function() {
-      console.log(this.tabIndex);
     }
   }
 }
