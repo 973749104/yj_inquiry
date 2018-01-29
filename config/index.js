@@ -10,7 +10,18 @@ module.exports = {
         // Paths
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
-        proxyTable: {},
+        proxyTable: {
+            // 测试环境
+            '/api': { // 接口域名
+                target: 'http://192.168.1.196/php_inquiry',
+                // 是否跨域
+                changeOrigin: true,
+                // rewrite重写
+                pathRewrite: {
+                    '^/api': '/api'
+                }
+            }
+        },
 
         // Various Dev Server settings
         host: 'localhost', // can be overwritten by process.env.HOST

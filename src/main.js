@@ -8,16 +8,32 @@ import router from './router/index';
 Vue.config.productionTip = false
 Vue.use(iView);
 
-const isLogin = false;
 // 路由拦截
 router.beforeEach((to, from, next) => {
-    if (isLogin) {
-        next();
-    } else {
-        if (to.path === '/login') {
+    // 如果是前往后台的路由判断
+    if (to.path === '/admin' || to.path === '/adminLogin') {
+        if (sessionStorage.getItem("user")) {
             next();
         } else {
-            next('/login');
+            if (to.path === '/adminLogin') {
+                next();
+            } else {
+                next('/adminLogin');
+            }
+        }
+    } else {
+        if (sessionStorage.getItem("user")) {
+            if (to.path === '/') {
+                next();
+            } else {
+                next('/')
+            }
+        } else {
+            if (to.path === '/login') {
+                next();
+            } else {
+                next('/login');
+            }
         }
     }
 })

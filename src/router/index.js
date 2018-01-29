@@ -11,6 +11,7 @@ const routers = [
     { path: '/login', component: _lazyLoad('login'), name: 'login' },
     { path: '/admin', component: _lazyLoad('admin/admin'), name: 'admin' },
     { path: '/adminLogin', component: _lazyLoad('admin/adminLogin'), name: 'adminLogin' },
+    { path: '*', component: _lazyLoad('404') }
 ]
 
 export default new Router({
