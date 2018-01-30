@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:50
  * @Last Modified by: LHX
- * @Last Modified time: 2018-01-29 17:58:32
+ * @Last Modified time: 2018-01-30 13:47:34
  * @登录
  */
 
@@ -17,7 +17,6 @@
        </FormItem>
      </Form>
      <Button @click="testConnect">测试</Button>
-     <div v-html="testData"></div>
    </div>
  </template>
 

@@ -58,111 +58,11 @@ export default {
           key: 'MLBSN'
         }
       ],
-      dataTable: [
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '1111',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-        {
-          SN: '21321',
-          IMEI: 'ASDAS',
-          ECID: 'AS25D2AS4',
-          MLBSN: '3S4DW313',
-        },
-      ]
+      dataTable: []
     }
+  },
+  created () {
+    this.getPageData(this.tabs);
   },
   mounted () {
   },
@@ -172,13 +72,16 @@ export default {
       }
   },
   methods: {
-    select(selection) {
+    // 拉取页面数据
+    getPageData: function(tab) {
+      this.$axios.get('/api/goods/pullGoods.php?tab=' + tab)
+      .then( (res) => {
+        this.dataTable = res.data;
+      })
+    },
+    select: function(selection) {
         this.$emit('selectData', selection, this.tabs);
-      },
-    selectAll(selection) {
-        console.log(selection);
-        this.$emit('selectData', selection, this.tabs);
-    }
+      }
   }
 }
 </script>

@@ -1,8 +1,8 @@
 /*
  * @Author: LHX
  * @Date: 2018-01-27 15:05:17
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-01-28 20:35:33
+ * @Last Modified by: LHX
+ * @Last Modified time: 2018-01-30 18:09:37
  * @ 首页
  */
 <template>
@@ -14,6 +14,7 @@
           <span>账号: xxxx </span>
           <span>剩余积分: xxx</span>
         </div>
+
         <div class="actButton">
           <Button type="error"
             @click="showCart"
@@ -21,10 +22,13 @@
         </div>
       </Header>
       <Content>
+            <div v-html="test">
+
+    </div>
         <!-- 分页 -->
         <Tabs v-model="tabIndex">
-          <TabPane v-for="(item, index) in tabs" :key="index" :label="item" :name="item">
-            <Tables v-on:selectData="addCart" :tabs="item"></Tables>
+          <TabPane v-for="(item, index) in tabs" :key="index" :label="item.model" :name="item.model">
+            <Tables v-on:selectData="addCart" :tabs="item.model" ref="table"></Tables>
           </TabPane>
         </Tabs>
       </Content>
@@ -35,6 +39,7 @@
       title="确认购买数据"
       ok-text="确认购买"
       @on-ok="buyOk"
+      width="80%"
     >
       <Table
         :columns="columns"
@@ -46,22 +51,12 @@
 
 <script>
 import Tables from '../components/tableCom';
+import index from 'vue';
 export default {
   data () {
     return {
       tabIndex: '',
-      tabs: [
-        'iphone1',
-        'iphone2',
-        'iphone3',
-        'iphone4',
-        'iphone5',
-        'iphone6',
-        'iphone7',
-        'iphone8',
-        'iphone9',
-        'iphone10',
-      ],
+      tabs: [],
       // 显示购物车
       modalCart: false,
       // 列
@@ -84,7 +79,11 @@ export default {
         }
       ],
       cartGoods: {},
+      test: ''
     }
+  },
+  created () {
+    this.getBrands();
   },
   mounted () {
   },
@@ -92,6 +91,13 @@ export default {
     Tables
   },
   methods: {
+    // 获取型号
+    getBrands: function() {
+      this.$axios.get('/api/goods/pullGoodBrands.php')
+      .then((res)=>{
+        this.tabs = res.data;
+      })
+    },
     showCart: function() {
       // 每次点击购买先清空购物车
       this.$store.dispatch('clearCart');
@@ -116,7 +122,24 @@ export default {
     },
     // 确认购买事件
     buyOk: function() {
-      console.log('ok');
+      const cartData = this.$store.getters.getCart;
+      let dataId = [];
+      for(let i=0;i<cartData.length;i++){
+        dataId.push({
+          data_Id: cartData[i].data_id
+        })
+      }
+      this.$axios.post('/api/goods/buyGood.php',{
+        userName: 'user1',
+        goodsId: dataId
+      })
+      .then((res) => {
+        if(res.data['result']){
+          this.$Message.success('购买成功，已下载数据');
+        }else{
+          this.$Message.error('购买失败');
+        }
+      })
     }
   }
 }

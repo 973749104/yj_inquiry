@@ -4,10 +4,11 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import store from './store/index';
 import router from './router/index';
+import axios from 'axios';
 
 Vue.config.productionTip = false
 Vue.use(iView);
-
+Vue.prototype.$axios = axios;
 // 路由拦截
 router.beforeEach((to, from, next) => {
     // 如果是前往后台的路由判断
