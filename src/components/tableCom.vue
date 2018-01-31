@@ -81,7 +81,11 @@ export default {
     },
     select: function(selection) {
         this.$emit('selectData', selection, this.tabs);
-      }
+    },
+    // 重新拉取页面数据
+    pushPageData: function() {
+      this.getPageData(this.tabs);
+    }
   }
 }
 </script>

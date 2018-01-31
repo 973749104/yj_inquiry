@@ -13,7 +13,7 @@ Vue.prototype.$axios = axios;
 router.beforeEach((to, from, next) => {
     // 如果是前往后台的路由判断
     if (to.path === '/admin' || to.path === '/adminLogin') {
-        if (sessionStorage.getItem("user")) {
+        if (sessionStorage.getItem("userInfo")) {
             next();
         } else {
             if (to.path === '/adminLogin') {
@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
             }
         }
     } else {
-        if (sessionStorage.getItem("user")) {
+        if (sessionStorage.getItem("userInfo")) {
             if (to.path === '/') {
                 next();
             } else {

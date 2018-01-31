@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:17
  * @Last Modified by: LHX
- * @Last Modified time: 2018-01-30 18:09:37
+ * @Last Modified time: 2018-01-31 14:07:45
  * @ 首页
  */
 <template>
@@ -11,8 +11,8 @@
       <!-- topBar -->
       <Header class="topBar" >
         <div class="userInfo">
-          <span>账号: xxxx </span>
-          <span>剩余积分: xxx</span>
+          <span>账号: {{ userName }} </span>
+          <span>剩余积分: {{ userPoint }}</span>
         </div>
 
         <div class="actButton">
@@ -79,11 +79,14 @@ export default {
         }
       ],
       cartGoods: {},
+      userName: '',
+      userPoint: '',
       test: ''
     }
   },
   created () {
     this.getBrands();
+    this.getUserInfo();
   },
   mounted () {
   },
@@ -98,6 +101,17 @@ export default {
         this.tabs = res.data;
       })
     },
+    // 获取用户信息
+    getUserInfo: function() {
+      const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+      if(userInfo){
+        this.userName = userInfo.userName;
+        this.userPoint = userInfo.userPoint;
+      }else{
+
+      }
+    },
+    // 显示购物车
     showCart: function() {
       // 每次点击购买先清空购物车
       this.$store.dispatch('clearCart');
@@ -134,12 +148,27 @@ export default {
         goodsId: dataId
       })
       .then((res) => {
+        this.test = res.data;
         if(res.data['result']){
+          // 刷新页面数据
+          this.pushTableData();
+          // 清空购物车
+          this.cartGoods = {};
+          this.$store.dispatch('clearCart');
+          // 下载EXCLE
+          // 返回提示信息
           this.$Message.success('购买成功，已下载数据');
         }else{
           this.$Message.error('购买失败');
         }
       })
+    },
+    // 刷新TABLE数据
+    pushTableData: function() {
+      let count = this.$refs.table.length;
+      for(let i=0;i<count;i++){
+        this.$refs.table[i].pushPageData();
+      }
     }
   }
 }

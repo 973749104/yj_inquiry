@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:50
  * @Last Modified by: LHX
- * @Last Modified time: 2018-01-30 13:47:34
+ * @Last Modified time: 2018-01-31 11:25:29
  * @登录
  */
 
@@ -17,6 +17,7 @@
        </FormItem>
      </Form>
      <Button @click="testConnect">测试</Button>
+     <div v-html="testData"></div>
    </div>
  </template>
 
@@ -44,7 +45,8 @@
         // 登录成功跳转
         this.testData = res.data;
         if(res.data){
-          sessionStorage.setItem('user', this.userName);
+          this.testData = res.data;
+          sessionStorage.setItem('userInfo', JSON.stringify(res.data));
           this.$router.push('/');
         }else{
           this.$Message.error('用户或密码错误');
