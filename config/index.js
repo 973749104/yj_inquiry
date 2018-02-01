@@ -13,7 +13,7 @@ module.exports = {
         proxyTable: {
             // 测试环境
             '/api': { // 接口域名
-                target: 'http://192.168.1.196/php_inquiry',
+                target: 'http://localhost/php_inquiry',
                 // 是否跨域
                 changeOrigin: true,
                 // rewrite重写
