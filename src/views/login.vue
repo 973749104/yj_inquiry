@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:50
  * @Last Modified by: LHX
- * @Last Modified time: 2018-01-31 11:25:29
+ * @Last Modified time: 2018-02-01 10:53:56
  * @登录
  */
 
@@ -43,9 +43,7 @@
       })
       .then( (res) => {
         // 登录成功跳转
-        this.testData = res.data;
         if(res.data){
-          this.testData = res.data;
           sessionStorage.setItem('userInfo', JSON.stringify(res.data));
           this.$router.push('/');
         }else{

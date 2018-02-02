@@ -21,6 +21,10 @@ export default {
     #app{
       width: 100%;
       height: 100%;
+      .ivu-poptip-popper{
+        max-height: 500px;
+        overflow: scroll;
+      }
     }
   }
 </style>

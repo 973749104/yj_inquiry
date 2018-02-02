@@ -1,8 +1,8 @@
 /*
  * @Author: LHX
  * @Date: 2018-01-27 15:05:17
- * @Last Modified by: LHX
- * @Last Modified time: 2018-01-31 14:07:45
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-02-01 12:33:56
  * @ 首页
  */
 <template>
@@ -22,11 +22,8 @@
         </div>
       </Header>
       <Content>
-            <div v-html="test">
-
-    </div>
         <!-- 分页 -->
-        <Tabs v-model="tabIndex">
+        <Tabs v-model="tabIndex" class="tabs">
           <TabPane v-for="(item, index) in tabs" :key="index" :label="item.model" :name="item.model">
             <Tables v-on:selectData="addCart" :tabs="item.model" ref="table"></Tables>
           </TabPane>
@@ -144,11 +141,11 @@ export default {
         })
       }
       this.$axios.post('/api/goods/buyGood.php',{
-        userName: 'user1',
+        userName: this.userName,
         goodsId: dataId
       })
       .then((res) => {
-        this.test = res.data;
+        // this.test = res.data;
         if(res.data['result']){
           // 刷新页面数据
           this.pushTableData();
@@ -159,7 +156,11 @@ export default {
           // 返回提示信息
           this.$Message.success('购买成功，已下载数据');
         }else{
-          this.$Message.error('购买失败');
+          if(res.data['errorCode']==101){
+            this.$Message.error('积分不足，请充值后购买');
+          }else{
+            this.$Message.error('购买失败');
+          }
         }
       })
     },
@@ -189,6 +190,9 @@ export default {
           font-size: 13px;
         }
       }
+    }
+    .tabs{
+      min-height: 800px;
     }
   }
 </style>
