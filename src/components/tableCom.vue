@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script>
+<script lang="scss" scoped>
 export default {
   data () {
     return {
@@ -19,6 +19,10 @@ export default {
           type: 'selection',
           width: 60,
           align: 'center'
+        },
+        {
+          title: '编号',
+          key: 'data_id'
         },
         {
           title: 'SN',
@@ -133,10 +137,6 @@ export default {
       }
       return formatData;
     },
-  },
-  // 过滤
-  filters: {
-
   }
 }
 </script>
