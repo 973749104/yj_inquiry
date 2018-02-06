@@ -1,24 +1,28 @@
 /*
  * @Author: LHX
  * @Date: 2018-01-27 14:33:28
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-01-28 20:26:54
+ * @Last Modified by: LHX
+ * @Last Modified time: 2018-02-06 18:00:28
  * @store
  */
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import index from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 const state = {
     // 购物车
     shoppingCart: [],
+    userName: '',
+    userPoints: ''
 }
 
 const getters = {
-    getCart: state => state.shoppingCart
+    getCart: state => state.shoppingCart,
+    getUserName: state => state.userName,
+    getUserPoint: state => state.userPoints
 }
 
 const mutations = {
@@ -27,8 +31,12 @@ const mutations = {
         state.shoppingCart.push(goods);
     },
     // 清空购物车
-    'CLEARCART': (statr) => {
+    'CLEARCART': (state) => {
         state.shoppingCart = [];
+    },
+    // 获取用户积分
+    'GETUSERPONIT': (state, ponit) => {
+        state.userPoints = ponit
     }
 }
 
@@ -38,6 +46,14 @@ const actions = {
     },
     clearCart: ({ commit }) => {
         commit('CLEARCART');
+    },
+    getUserPoint: ({ commit }, userName) => {
+        axios.post('/api/user/getUserPoint.php', {
+            userName: userName
+        }).then((res) => {
+            commit('GETUSERPONIT', res.data);
+        });
+
     }
 }
 

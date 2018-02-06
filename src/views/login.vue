@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:50
  * @Last Modified by: LHX
- * @Last Modified time: 2018-02-01 10:53:56
+ * @Last Modified time: 2018-02-06 17:51:09
  * @登录
  */
 
@@ -45,6 +45,7 @@
         // 登录成功跳转
         if(res.data){
           sessionStorage.setItem('userInfo', JSON.stringify(res.data));
+          this.$store.dispatch('getUserPoint', res.data['userName']);
           this.$router.push('/');
         }else{
           this.$Message.error('用户或密码错误');

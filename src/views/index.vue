@@ -2,7 +2,7 @@
  * @Author: LHX
  * @Date: 2018-01-27 15:05:17
  * @Last Modified by: LHX
- * @Last Modified time: 2018-02-01 12:33:56
+ * @Last Modified time: 2018-02-06 18:02:45
  * @ 首页
  */
 <template>
@@ -12,7 +12,7 @@
       <Header class="topBar" >
         <div class="userInfo">
           <span>账号: {{ userName }} </span>
-          <span>剩余积分: {{ userPoint }}</span>
+          <span>剩余积分: {{ this.$store.getters.getUserPoint }}</span>
         </div>
         <div class="actButton">
           <Button type="error"
@@ -49,6 +49,8 @@
 <script>
 import Tables from '../components/tableCom';
 import index from 'vue';
+// 引入下载EXCEL
+import exportExcel from 'js-export-excel';
 export default {
   data () {
     return {
@@ -103,9 +105,7 @@ export default {
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
       if(userInfo){
         this.userName = userInfo.userName;
-        this.userPoint = userInfo.userPoint;
-      }else{
-
+        this.$store.dispatch('getUserPoint', userInfo.userName);
       }
     },
     // 显示购物车
@@ -145,15 +145,15 @@ export default {
         goodsId: dataId
       })
       .then((res) => {
-        // this.test = res.data;
         if(res.data['result']){
           // 刷新页面数据
           this.pushTableData();
+          this.getUserInfo();
           // 清空购物车
           this.cartGoods = {};
           this.$store.dispatch('clearCart');
           // 下载EXCLE
-          this.test = res.data['dataCode'];
+          this.downLoadExcel(res.data['dataCode']);
           // 返回提示信息
           this.$Message.success('购买成功，已下载数据');
         }else{
@@ -171,6 +171,22 @@ export default {
       for(let i=0;i<count;i++){
         this.$refs.table[i].pushPageData();
       }
+    },
+    // 导出EXCEL
+    downLoadExcel: function(data) {
+      // 生成列头
+      let header = [];
+      for(let index in data[0]){
+        header.push(index);
+      }
+      let option = {};
+      option.fileName = 'dataExcel';
+      option.datas=[{
+        sheetData: data,
+        sheetHeader: header,
+      }]
+      const toExcel = new exportExcel(option);
+      toExcel.saveExcel();
     }
   }
 }
