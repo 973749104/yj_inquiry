@@ -180,7 +180,8 @@ export default {
         header.push(index);
       }
       let option = {};
-      option.fileName = 'dataExcel';
+      console.log(this.tabIndex)
+      option.fileName = this.tabIndex;
       option.datas=[{
         sheetData: data,
         sheetHeader: header,

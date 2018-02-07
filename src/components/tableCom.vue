@@ -119,11 +119,11 @@ export default {
           BTY.push(data[i].BTY);
         }
       }
-      this.columns[1].filters = this.formatData(SN);
-      this.columns[2].filters= this.formatData(IMEI);
-      this.columns[3].filters= this.formatData(ECID);
-      this.columns[4].filters= this.formatData(MLBSN);
-      this.columns[5].filters= this.formatData(BTY);
+      this.columns[2].filters = this.formatData(SN);
+      this.columns[3].filters= this.formatData(IMEI);
+      this.columns[4].filters= this.formatData(ECID);
+      this.columns[5].filters= this.formatData(MLBSN);
+      this.columns[6].filters= this.formatData(BTY);
     },
     formatData: function(data) {
       let formatData = [];
