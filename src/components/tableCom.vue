@@ -96,7 +96,7 @@ export default {
       this.getPageData(this.tabs);
     },
     // 数据筛选
-    fileterData: function(data){;
+    fileterData: function(data){
       let SN = [];
       let IMEI = [];
       let ECID = [];

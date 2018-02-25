@@ -8,13 +8,29 @@
 
 <template>
   <div class="adminLogin">
-    adminLogin
+     <Form :label-width="80" class="loginForm">
+       <FormItem label="用户名">
+         <Input v-model="userName"/>
+       </FormItem>
+       <FormItem label="密码">
+         <Input v-model="pwd" type="password"/>
+       </FormItem>
+     </Form>
+     <Button @click="testConnect">测试</Button>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+   data () {
+     return {
+       userName: '',
+       pwd: '',
+       testData: ''
+     }
+   },
 }
 </script>
 
