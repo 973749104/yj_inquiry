@@ -160,7 +160,7 @@ export default {
           if(res.data['errorCode']==101){
             this.$Message.error('积分不足，请充值后购买');
           }else{
-            this.$Message.error('购买失败');
+            this.$Message.error('购买失败,请重试');
           }
         }
       })
@@ -180,8 +180,7 @@ export default {
         header.push(index);
       }
       let option = {};
-      console.log(this.tabIndex)
-      option.fileName = this.tabIndex;
+      option.fileName = 'data';
       option.datas=[{
         sheetData: data,
         sheetHeader: header,
